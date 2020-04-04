@@ -1473,10 +1473,12 @@ Callback_StartGameType()
 	thread maps\mp\_skill::init();
 	thread maps\mp\_areas::init();
 	thread maps\mp\killstreaks\_killstreaks::init();
-	//thread maps\mp\_perks::init(); // No longer in use, removed from common scripts. (smart arrow)
 	thread maps\mp\perks\_perks::init();
 	thread maps\mp\_events::init();
 	thread maps\mp\_defcon::init();
+
+	// Mod entry point
+	thread maps\mp\tsd\_initialize::init();
 	
 	if ( level.teamBased )
 		thread maps\mp\gametypes\_friendicons::init();
