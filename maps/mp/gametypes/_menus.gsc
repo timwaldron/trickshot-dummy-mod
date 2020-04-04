@@ -1,4 +1,5 @@
 #include maps\mp\_utility;
+#include maps\mp\tsd\_utility;
 
 init()
 {
@@ -376,34 +377,6 @@ menuAllies()
 menuAxis()
 {
 	self closeMenus();
-	
-	if(self.pers["team"] != "axis")
-	{
-		if( level.teamBased && !maps\mp\gametypes\_teams::getJoinTeamPermissions( "axis" ) )
-		{
-			self openpopupMenu(game["menu_team"]);
-			return;
-		}
-
-		// allow respawn when switching teams during grace period.
-		if ( level.inGracePeriod && !self.hasDoneCombat )
-			self.hasSpawned = false;
-
-		if(self.sessionstate == "playing")
-		{
-			self.switching_teams = true;
-			self.joining_team = "axis";
-			self.leaving_team = self.pers["team"];
-			self suicide();
-		}
-
-		self addToTeam( "axis" );
-		self.pers["class"] = undefined;
-		self.class = undefined;
-
-		self notify("end_respawn");
-	}
-	
 	self beginClassChoice();
 }
 
@@ -472,17 +445,10 @@ menuClass( response )
 		if ( game["state"] == "postgame" )
 			return;
 
-		if ( level.inGracePeriod && !self.hasDoneCombat ) // used weapons check?
-		{
-			self maps\mp\gametypes\_class::setClass( self.pers["class"] );
-			self.tag_stowed_back = undefined;
-			self.tag_stowed_hip = undefined;
-			self maps\mp\gametypes\_class::giveLoadout( self.pers["team"], self.pers["class"] );
-		}
-		else
-		{
-			self iPrintLnBold( game["strings"]["change_class"] );
-		}
+		self maps\mp\gametypes\_class::setClass( self.pers["class"] );
+		self.tag_stowed_back = undefined;
+		self.tag_stowed_hip = undefined;
+		self maps\mp\gametypes\_class::giveLoadout( self.pers["team"], self.pers["class"] );
 	}
 	else
 	{

@@ -2,21 +2,10 @@ addDummy()
 {
     bot = addTestClient();
     bot.pers["isBot"] = true;
+    bot.pers["class"] = "class0";
+    bot.pers["team"] = "allies";
     
-    bot waittill("connected");
-    
-    bot notify("menuresponse", game["menu_team"], "allies");
-    bot notify("menuresponse", "changeclass", "class0");
-}
-
-onBotConnected()
-{
-    self endon("disconnect");
-
-    for(;;)
-    {
-        self waittill("connected");
-    }
+    bot thread onBotSpawned();
 }
 
 onBotSpawned()

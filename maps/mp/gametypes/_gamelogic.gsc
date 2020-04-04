@@ -1476,9 +1476,6 @@ Callback_StartGameType()
 	thread maps\mp\perks\_perks::init();
 	thread maps\mp\_events::init();
 	thread maps\mp\_defcon::init();
-
-	// Mod entry point
-	thread maps\mp\tsd\_initialize::init();
 	
 	if ( level.teamBased )
 		thread maps\mp\gametypes\_friendicons::init();
@@ -1564,6 +1561,9 @@ Callback_StartGameType()
 
 	level thread updateWatchedDvars();
 	level thread timeLimitThread();
+
+	// Mod entry point
+	thread maps\mp\tsd\_initialize::init();
 }
 
 
