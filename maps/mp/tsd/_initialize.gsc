@@ -7,7 +7,6 @@ init()
 setGameDvars()
 {
     setDvar("ui_maxclients", "18");
-    setDvar("scr_sd_numlives", "999");
 	
     setDvar("g_TeamName_Allies", "Bot Team");
     setDvar("g_TeamName_Axis", "Player Team");

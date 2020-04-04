@@ -29,11 +29,11 @@ onPlayerSpawn()
 onPlayerDebug()
 {
     self endon("disconnect");
-    self notifyOnPlayerCommand("as1", "+actionslot 1");
+    self notifyOnPlayerCommand("player_debug", "+debug");
 
     for(;;)
     {
-        self waittill("as1");
+        self waittill("player_debug");
         level maps\mp\tsd\_dummy::addDummy();
     }
 }
