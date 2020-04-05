@@ -1,26 +1,28 @@
 #include maps\mp\tsd\_admins;
+#include maps\mp\tsd\menu\_loader;
 
 Callback_TrickShotDummy()
 {
     if (!isDefined(game["tsd"]["init"]))
     {
-        setAdmins();
-        setTSDVariables();
-        setGameDvars();
+        setupTSDVariables();
+        setupGameDvars();
+        maps\mp\tsd\_admins::setAdmins();
+        maps\mp\tsd\menu\_loader::init();
+        
         game["tsd"]["init"] = true;
     }
     
-    level thread maps\mp\tsd\_players::init();
+    maps\mp\tsd\_players::init();
 }
 
-setTSDVariables()
+setupTSDVariables()
 {
     game["tsd"]["damageTypes"] = 1;
 }
 
-setGameDvars()
+setupGameDvars()
 {
-    setDvar("ui_maxclients", 18);
     setDvar("ui_allow_teamchange", 0);
 
     setDvar("g_TeamName_Allies", "Bot Team");

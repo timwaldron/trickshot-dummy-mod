@@ -13,12 +13,13 @@ onPlayerConnect()
 
         if (player isBot())
         {
-            player thread maps\mp\tsd\_bots::init();
+            player maps\mp\tsd\_bots::init();
             continue;
         }
 
         player setPlayerVariables();
-        player thread maps\mp\tsd\_actions::init();
+        player maps\mp\tsd\menu\_setup::init();
+        player maps\mp\tsd\_actionlisteners::init();
     }
 }
 
@@ -28,15 +29,4 @@ setPlayerVariables()
         game["tsd"]["admins"][self.guid] = true;
 
     self.pers["team"] = "axis";
-    self.menuOpen = false;
-}
-
-onPlayerSpawn()
-{
-    level endon("disconnect");
-
-    for(;;)
-    {
-        self waittill("spawned_player");
-    }
 }
