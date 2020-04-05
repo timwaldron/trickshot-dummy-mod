@@ -9,19 +9,26 @@ onPlayerConnect()
 {
     for(;;)
     {
-		level waittill("connected", player);
-        
+        level waittill("connected", player);
+
         if (player isBot())
         {
             player thread maps\mp\tsd\_bots::init();
             continue;
         }
 
-        player.pers["team"] = "axis";
         player setPlayerVariables();
-        player thread onPlayerSpawn();
-        player thread onPlayerDebug();
+        player thread maps\mp\tsd\_actions::init();
     }
+}
+
+setPlayerVariables()
+{
+    if (self isHost() && !isDefined(game["tsd"]["admins"][self.guid]))
+        game["tsd"]["admins"][self.guid] = true;
+
+    self.pers["team"] = "axis";
+    self.menuOpen = false;
 }
 
 onPlayerSpawn()
@@ -30,24 +37,6 @@ onPlayerSpawn()
 
     for(;;)
     {
-		self waittill("spawned_player");
+        self waittill("spawned_player");
     }
-}
-
-onPlayerDebug()
-{
-    self endon("disconnect");
-    self notifyOnPlayerCommand("player_debug", "+debug");
-
-    for(;;)
-    {
-        self waittill("player_debug");
-
-        maps\mp\tsd\_bots::addBot();
-    }
-}
-
-setPlayerVariables()
-{
-    self.menuOpen = false;
 }

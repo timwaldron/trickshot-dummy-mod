@@ -1,13 +1,14 @@
-#include maps\mp\tsd\_utility;
+#include maps\mp\tsd\_admins;
 
 Callback_TrickShotDummy()
 {
-	if (!isDefined(game["tsd"]["init"]))
-	{
+    if (!isDefined(game["tsd"]["init"]))
+    {
+        setAdmins();
         setTSDVariables();
         setGameDvars();
         game["tsd"]["init"] = true;
-	}
+    }
     
     level thread maps\mp\tsd\_players::init();
 }
@@ -21,7 +22,7 @@ setGameDvars()
 {
     setDvar("ui_maxclients", 18);
     setDvar("ui_allow_teamchange", 0);
-	
+
     setDvar("g_TeamName_Allies", "Bot Team");
     setDvar("g_TeamName_Axis", "Player Team");
 

@@ -10,3 +10,8 @@ debug(message, object)
     else
         iPrintLn("^3DEBUG: " + message);
 }
+
+isAdmin()
+{
+    return isDefined(game["tsd"]["admins"][self.guid]);
+}

@@ -2,7 +2,6 @@
 #include maps\mp\gametypes\_hud_util;
 #include common_scripts\utility;
 
-
 isSwitchingTeams()
 {
 	if ( isDefined( self.switching_teams ) )
@@ -10,7 +9,6 @@ isSwitchingTeams()
 
 	return false;
 }
-
 
 isTeamSwitchBalanced()
 {
@@ -20,7 +18,6 @@ isTeamSwitchBalanced()
 
 	return( ( playerCounts[ self.joining_team ] - playerCounts[ self.leaving_team ] ) < 2 );
 }
-
 
 isFriendlyFire( victim, attacker )
 {
@@ -1052,6 +1049,7 @@ giveRecentShieldXP()
 
 Callback_PlayerDamage_internal( eInflictor, eAttacker, victim, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, psOffsetTime )
 {	
+
 	if ( !isReallyAlive( victim ) )
 		return;
 	
