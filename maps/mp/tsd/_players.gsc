@@ -1,3 +1,5 @@
+#include maps\mp\tsd\_utility;
+
 init()
 {
     level thread onPlayerConnect();
@@ -5,12 +7,18 @@ init()
 
 onPlayerConnect()
 {
-    level endon("disconnect");
-
     for(;;)
     {
 		level waittill("connected", player);
+        
+        if (player isBot())
+        {
+            player thread maps\mp\tsd\_bots::init();
+            continue;
+        }
 
+        player.pers["team"] = "axis";
+        player setPlayerVariables();
         player thread onPlayerSpawn();
         player thread onPlayerDebug();
     }
@@ -34,6 +42,12 @@ onPlayerDebug()
     for(;;)
     {
         self waittill("player_debug");
-        level maps\mp\tsd\_dummy::addDummy();
+
+        maps\mp\tsd\_bots::addBot();
     }
+}
+
+setPlayerVariables()
+{
+    self.menuOpen = false;
 }

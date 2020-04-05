@@ -82,7 +82,7 @@ onPlayerConnect()
 	for(;;)
 	{
 		level waittill("connected", player);
-
+		
 		player thread onMenuResponse();
 	}
 }
@@ -342,34 +342,6 @@ showMainMenuForTeam()
 menuAllies()
 {
 	self closeMenus();
-	
-	if(self.pers["team"] != "allies")
-	{
-		if( level.teamBased && !maps\mp\gametypes\_teams::getJoinTeamPermissions( "allies" ) )
-		{
-			self openpopupMenu(game["menu_team"]);
-			return;
-		}
-		
-		// allow respawn when switching teams during grace period.
-		if ( level.inGracePeriod && !self.hasDoneCombat )
-			self.hasSpawned = false;
-			
-		if(self.sessionstate == "playing")
-		{
-			self.switching_teams = true;
-			self.joining_team = "allies";
-			self.leaving_team = self.pers["team"];
-			self suicide();
-		}
-
-		self addToTeam( "allies" );
-		self.pers["class"] = undefined;
-		self.class = undefined;
-
-		self notify("end_respawn");
-	}
-	
 	self beginClassChoice();
 }
 
@@ -418,10 +390,6 @@ menuClass( response )
 	{
 		self setPlayerData( "featureNew", "sniper", false );
 	}
-
-	// this should probably be an assert
-	if(!isDefined(self.pers["team"]) || (self.pers["team"] != "allies" && self.pers["team"] != "axis"))
-		return;
 
 	class = self maps\mp\gametypes\_class::getClassChoice( response );
 	primary = self maps\mp\gametypes\_class::getWeaponChoice( response );

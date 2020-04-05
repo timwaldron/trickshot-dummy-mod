@@ -408,23 +408,6 @@ waitForPlayers( maxTime )
 prematchPeriod()
 {
 	level endon( "game_ended" );
-
-	if ( level.prematchPeriod > 0 )
-	{
-		if ( level.console )
-		{
-			thread matchStartTimer( "match_starting_in", level.prematchPeriod );
-			wait ( level.prematchPeriod );
-		}
-		else
-		{
-			matchStartTimerPC();
-		}
-	}
-	else
-	{
-		matchStartTimerSkip();
-	}
 	
 	for ( index = 0; index < level.players.size; index++ )
 	{
@@ -448,14 +431,6 @@ gracePeriod()
 {
 	level endon("game_ended");
 	
-	while ( level.inGracePeriod )
-	{
-		wait ( 1.0 );
-		level.inGracePeriod--;
-	}
-
-	//wait ( level.gracePeriod );
-	
 	level notify ( "grace_period_ending" );
 	wait ( 0.05 );
 	
@@ -464,20 +439,6 @@ gracePeriod()
 	
 	if ( game["state"] != "playing" )
 		return;
-	
-	if ( getGametypeNumLives() )
-	{
-		// Players on a team but without a weapon show as dead since they can not get in this round
-		players = level.players;
-		
-		for ( i = 0; i < players.size; i++ )
-		{
-			player = players[i];
-			
-			if ( !player.hasSpawned && player.sessionteam != "spectator" && !isAlive( player ) )
-				player.statusicon = "hud_status_dead";
-		}
-	}
 	
 	level thread updateGameEvents();
 }
@@ -1561,9 +1522,6 @@ Callback_StartGameType()
 
 	level thread updateWatchedDvars();
 	level thread timeLimitThread();
-
-	// Mod entry point
-	thread maps\mp\tsd\_initialize::init();
 }
 
 
