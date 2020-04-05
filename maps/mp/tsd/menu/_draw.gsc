@@ -14,10 +14,10 @@ setupMenuText()
 {
     self.tsd["menu"]["text"]["title"] = createFontString("default", 2);
     self.tsd["menu"]["text"]["title"] setPoint("CENTER", "CENTER", 0, -150);
-	self.tsd["menu"]["text"]["previous"] = self createFontString("default", 1.5);
-	self.tsd["menu"]["text"]["previous"] setPoint("CENTER", "CENTER", -200, -150);
-	self.tsd["menu"]["text"]["next"] = self createFontString("default", 1.5);
-	self.tsd["menu"]["text"]["next"] setPoint("CENTER", "CENTER", 200, -150);
+    self.tsd["menu"]["text"]["previous"] = self createFontString("default", 1.5);
+    self.tsd["menu"]["text"]["previous"] setPoint("CENTER", "CENTER", -200, -150);
+    self.tsd["menu"]["text"]["next"] = self createFontString("default", 1.5);
+    self.tsd["menu"]["text"]["next"] setPoint("CENTER", "CENTER", 200, -150);
 
     yPos = -80;
     for (index = 0; index < 15; index++)

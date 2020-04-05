@@ -1,6 +1,3 @@
-#include maps\mp\tsd\_admins;
-#include maps\mp\tsd\menu\_loader;
-
 Callback_TrickShotDummy()
 {
     if (!isDefined(game["tsd"]["init"]))
