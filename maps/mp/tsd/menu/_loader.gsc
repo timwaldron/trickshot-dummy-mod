@@ -44,10 +44,22 @@ setCategoryValues()
 
     // Teleports / UFO
     game["tsd"]["menu"][0]["title"] = getCurrentMapName() + " Teleport Menu";
+    setMapTeleports();
+
     game["tsd"]["menu"][0]["body"][0]["text"] = "^2Press ^3[{+frag}] ^2to ^3spawn a bot";
+
     game["tsd"]["menu"][0]["body"][0]["func"] = maps\mp\tsd\_bots::addBot;
     game["tsd"]["menu"][0]["body"][1]["text"] = "^2Press ^3[{+actionslot 2}] ^2to ^3move bots to crosshairs";
-    setMapTeleports();
+
+    game["tsd"]["menu"][0]["body"][6]["text"] = "^2Press ^3[{+gostand}] ^2to ^5toggle ^2into ^5UFO mode";
+    game["tsd"]["menu"][0]["body"][6]["func"] = maps\mp\tsd\menu\funcs\_ufo::toggleUFO;
+
+    game["tsd"]["menu"][0]["body"][7]["text"] = "^2Press ^3[{+melee}] ^2to ^5save ^2your current location";
+    game["tsd"]["menu"][0]["body"][7]["func"] = maps\mp\tsd\menu\funcs\_ufo::saveUFOPosition;
+
+    game["tsd"]["menu"][0]["body"][8]["text"] = "^2Press ^3[{+reload}] ^2to ^5load ^2your saved location";
+    game["tsd"]["menu"][0]["body"][8]["func"] = maps\mp\tsd\menu\funcs\_ufo::loadUFOPosition;
+
     
     // Equipment
     game["tsd"]["menu"][1]["title"] = "Equiment";

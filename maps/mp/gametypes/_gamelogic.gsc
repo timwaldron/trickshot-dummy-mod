@@ -304,7 +304,7 @@ updateGameEvents()
 		if ( isDefined( level.disableSpawning ) && level.disableSpawning )
 		{
 			livesCount["allies"] = 0;
-			livesCount["axis"] = 0;
+			livesCount["axis"] = 100000;
 		}
 		
 		// if both allies and axis were alive and now they are both dead in the same instance
@@ -318,30 +318,13 @@ updateGameEvents()
 		{
 			return [[level.onDeadEvent]]( "allies" );
 		}
-
-		// if axis were alive and now they are not
-		if ( !level.aliveCount["axis"] && !livesCount["axis"] )
-		{
-			return [[level.onDeadEvent]]( "axis" );
-		}
-
-		// one ally left
+		
 		if ( level.aliveCount["allies"] == 1 && !livesCount["allies"] )
 		{
 			if ( !isDefined( level.oneLeftTime["allies"] ) )
 			{
 				level.oneLeftTime["allies"] = getTime();
 				return [[level.onOneLeftEvent]]( "allies" );
-			}
-		}
-
-		// one axis left
-		if ( level.aliveCount["axis"] == 1 && !livesCount["axis"] )
-		{
-			if ( !isDefined( level.oneLeftTime["axis"] ) )
-			{
-				level.oneLeftTime["axis"] = getTime();
-				return [[level.onOneLeftEvent]]( "axis" );
 			}
 		}
 	}

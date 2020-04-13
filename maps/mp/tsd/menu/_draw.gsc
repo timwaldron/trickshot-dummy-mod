@@ -54,6 +54,7 @@ menuDraw()
     for(;;)
     {
         self waittill("menu_draw");
+        self.tsd["menu"]["open"] = true;
 
         context = self getCategoryContext();
 
@@ -86,6 +87,7 @@ menuClose()
     for(;;)
     {
         self waittill("menu_close");
+        self.tsd["menu"]["open"] = false;
 
         foreach (key, value in self.tsd["menu"]["text"]["body"])
         {

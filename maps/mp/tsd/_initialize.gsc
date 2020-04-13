@@ -27,4 +27,6 @@ setupGameDvars()
 
     setDvar("testClients_doMove", 0);
     setDvar("testClients_doAttack", 0);
+
+    level.onOneLeftEvent = undefined;
 }
