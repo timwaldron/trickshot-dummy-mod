@@ -13,6 +13,11 @@ hasMenuOpen()
     return self.tsd["menu"]["open"];
 }
 
+getContext()
+{
+    return self.tsd["menu"]["context"]["screen"];
+}
+
 debug(message, object)
 {
     if (isDefined(object))
