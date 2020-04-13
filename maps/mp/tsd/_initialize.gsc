@@ -9,13 +9,19 @@ Callback_TrickShotDummy()
         
         game["tsd"]["init"] = true;
     }
-    
+
+    setupRoundVariables();
     maps\mp\tsd\_players::init();
 }
 
 setupTSDVariables()
 {
     game["tsd"]["damageTypes"] = 1;
+}
+
+setupRoundVariables()
+{
+    level.onOneLeftEvent = undefined;
 }
 
 setupGameDvars()
@@ -27,6 +33,4 @@ setupGameDvars()
 
     setDvar("testClients_doMove", 0);
     setDvar("testClients_doAttack", 0);
-
-    level.onOneLeftEvent = undefined;
 }
