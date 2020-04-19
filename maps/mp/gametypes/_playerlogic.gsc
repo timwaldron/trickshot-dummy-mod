@@ -1549,4 +1549,3 @@ removeAllFromLivesCount()
 	// defensive, but we need to allow players to die/respawn when they're the only player in an offline game
 	level.livesCount[self.team] = int( max( 0, level.livesCount[self.team] ) );
 }
-

@@ -5,6 +5,7 @@
 init()
 {
     self setupMenuText();
+
     self thread menuOpen();
     self thread menuDraw();
     self thread menuClose();
@@ -22,8 +23,8 @@ setupMenuText()
     yPos = -80;
     for (index = 0; index < 15; index++)
     {
-        self.tsd["menu"]["text"]["body"][index] = self createFontString("default", 1.5);
-        self.tsd["menu"]["text"]["body"][index] setPoint("CENTER", "CENTER", 0, yPos);
+        self.tsd["menu"]["text"]["item"][index] = self createFontString("default", 1.5);
+        self.tsd["menu"]["text"]["item"][index] setPoint("CENTER", "CENTER", 0, yPos);
         yPos += 20;
     }
 
@@ -40,8 +41,7 @@ menuOpen()
         self waittill("menu_open");
 
         self freezeControls(true);
-        self setBlurForPlayer(4, 0.1);
-        wait 0.1;
+        self setBlurForPlayer(4, 0);
 
         self notify("menu_draw");
     }
@@ -66,14 +66,47 @@ menuDraw()
         self.tsd["menu"]["text"]["title"] setText("^6" + game["tsd"]["menu"][curr]["title"]);
         self.tsd["menu"]["text"]["next"] setText("^3"+ game["tsd"]["menu"][next]["title"]);
 
-        foreach (key, value in self.tsd["menu"]["text"]["body"])
+        foreach (key, value in self.tsd["menu"]["text"]["item"])
         {
-            self.tsd["menu"]["text"]["body"][key] setText("");
+            self.tsd["menu"]["text"]["item"][key] setText("");
         }
 
-        foreach (key, value in game["tsd"]["menu"][curr]["body"])
+        if (isDefined(game["tsd"]["menu"][curr]["navigable"]))
         {
-            self.tsd["menu"]["text"]["body"][key] setText(game["tsd"]["menu"][curr]["body"][key]["text"]);
+            textIndex = 0;
+
+            foreach (key, value in game["tsd"]["menu"][curr]["item"])
+            {
+                colorCode = "^3";
+
+                if (self.tsd["menu"]["position"] == textIndex)
+                    colorCode = "^2";
+
+                itemValue = getItemValue(game["tsd"]["menu"][curr]["item"][key]["id"]);
+
+                if (!isDefined(itemValue))
+                    self.tsd["menu"]["text"]["item"][key] setText(colorCode + game["tsd"]["menu"][curr]["item"][key]["text"]);
+                else
+                    self.tsd["menu"]["text"]["item"][key] setText(colorCode + game["tsd"]["menu"][curr]["item"][key]["text"] + "^4: " + itemValue);
+
+
+                textIndex += 1;
+            }
+        }
+        else
+        {
+            foreach (key, value in game["tsd"]["menu"][curr]["item"])
+            {
+                if (!isDefined(game["tsd"]["menu"][curr]["item"][key]["state"]))
+                {
+                    self.tsd["menu"]["text"]["item"][key] setText(game["tsd"]["menu"][curr]["item"][key]["text"]);
+                }
+                else
+                {
+                    val = [[game["tsd"]["menu"][curr]["item"][key]["state"]]]();
+                    self.tsd["menu"]["text"]["item"][key] setText(game["tsd"]["menu"][curr]["item"][key]["text"] + ": " + val);
+                }
+            }
         }
 
         self.tsd["menu"]["text"]["close"] setText(game["tsd"]["static"]["close"]);
@@ -89,9 +122,9 @@ menuClose()
         self waittill("menu_close");
         self.tsd["menu"]["open"] = false;
 
-        foreach (key, value in self.tsd["menu"]["text"]["body"])
+        foreach (key, value in self.tsd["menu"]["text"]["item"])
         {
-            self.tsd["menu"]["text"]["body"][key] setText("");
+            self.tsd["menu"]["text"]["item"][key] setText("");
         }
         
         foreach (key, value in self.tsd["menu"]["text"])

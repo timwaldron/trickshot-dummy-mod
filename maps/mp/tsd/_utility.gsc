@@ -18,10 +18,25 @@ getContext()
     return self.tsd["menu"]["context"]["screen"];
 }
 
-debug(message, object)
+getGameSettingValue(settingId)
+{
+    return game["tsd"]["settings"][settingId]["value"];
+}
+
+debugObject(message, object)
 {
     if (isDefined(object))
         iPrintLn("^3DEBUG: " + message + " | Object Value: " + object);
     else
         iPrintLn("^3DEBUG: " + message + " | Object Value: undefined");
+}
+
+info(message)
+{
+    iPrintLn("^2INFO: " + message);
+}
+
+error(message)
+{
+    iPrintLn("^1ERROR: " + message);
 }

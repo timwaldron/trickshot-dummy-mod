@@ -16,15 +16,15 @@ notifyActions()
     self notifyOnPlayerCommand("moveforward", "+forward");
     self notifyOnPlayerCommand("moveback", "+back");
 
-    self notifyOnPlayerCommand("fraged", "+frag");
-    self notifyOnPlayerCommand("actionslot_2", "+actionslot 2");
-    self notifyOnPlayerCommand("actionslot_3", "+actionslot 3");
-    self notifyOnPlayerCommand("actionslot_4", "+actionslot 4");
-    self notifyOnPlayerCommand("smoked", "+smoke");
+    self notifyOnPlayerCommand("frag", "+frag");
+    self notifyOnPlayerCommand("actionslot 2", "+actionslot 2");
+    self notifyOnPlayerCommand("actionslot 3", "+actionslot 3");
+    self notifyOnPlayerCommand("actionslot 4", "+actionslot 4");
+    self notifyOnPlayerCommand("smoke", "+smoke");
     self notifyOnPlayerCommand("activated", "+activated");
     self notifyOnPlayerCommand("gostand", "+gostand");
     self notifyOnPlayerCommand("melee", "+melee");
-    self notifyOnPlayerCommand("reloaded", "+reload");
+    self notifyOnPlayerCommand("reload", "+reload");
 }
 
 notifyListeners()
@@ -71,8 +71,17 @@ onMoveForward()
     {
         self waittill("moveforward");
         
-        if (!self hasMenuOpen())
+        if (!self hasMenuOpen() && !isDefined(game["tsd"]["menu"][getContext()]["navigable"]))
             continue;
+
+        self.tsd["menu"]["position"] -= 1;
+
+        if (self.tsd["menu"]["position"] < 0)
+        {
+            self.tsd["menu"]["position"] = game["tsd"]["menu"][getContext()]["item"].size - 1;
+        }
+
+        self notify("menu_draw");
     }
 }
 
@@ -84,8 +93,17 @@ onMoveBack()
     {
         self waittill("moveback");
         
-        if (!self hasMenuOpen())
+        if (!self hasMenuOpen() && !isDefined(game["tsd"]["menu"][getContext()]["navigable"]))
             continue;
+
+        self.tsd["menu"]["position"] += 1;
+
+        if (self.tsd["menu"]["position"] >= game["tsd"]["menu"][getContext()]["item"].size)
+        {
+            self.tsd["menu"]["position"] = 0;
+        }
+
+        self notify("menu_draw");
     }
 }
 
@@ -99,7 +117,8 @@ onMoveLeft()
         
         if (!self hasMenuOpen())
             continue;
-            
+        
+        self.tsd["menu"]["position"] = 0;
         self.tsd["menu"]["context"]["screen"] -= 1;
 
         self notify("menu_draw");
@@ -117,6 +136,7 @@ onMoveRight()
         if (!self hasMenuOpen())
             continue;
 
+        self.tsd["menu"]["position"] = 0;
         self.tsd["menu"]["context"]["screen"] += 1;
 
         self notify("menu_draw");
@@ -127,17 +147,16 @@ onMoveRight()
 onFrag()
 {
     self endon("disconnect");
-    actionIndex = 0;
 
     for(;;)
     {
-        self waittill("fraged");
+        self waittill("frag");
         
         if (!self hasMenuOpen())
             continue;
 
         context = self.tsd["menu"]["context"]["screen"];
-        [[game["tsd"]["menu"][context]["body"][actionIndex]["func"]]]();
+        [[game["tsd"]["menu"][getContext()]["action"]["frag"]]]();
         
         self notify("menu_draw");
     }
@@ -146,16 +165,15 @@ onFrag()
 onActionSlot2()
 {
     self endon("disconnect");
-    actionIndex = 1;
 
     for(;;)
     {
-        self waittill("actionslot_2");
+        self waittill("actionslot 2");
         
         if (!self hasMenuOpen())
             continue;
             
-        [[game["tsd"]["menu"][getContext()]["body"][actionIndex]["func"]]]();
+        [[game["tsd"]["menu"][getContext()]["action"]["actionslot 2"]]]();
         
         self notify("menu_draw");
     }
@@ -164,14 +182,15 @@ onActionSlot2()
 onActionSlot3()
 {
     self endon("disconnect");
-    actionIndex = 2;
 
     for(;;)
     {
-        self waittill("actionslot_3");
+        self waittill("actionslot 3");
         
         if (!self hasMenuOpen())
             continue;
+
+        [[game["tsd"]["menu"][getContext()]["action"]["actionslot 3"]]]();
         
         self notify("menu_draw");
     }
@@ -180,15 +199,16 @@ onActionSlot3()
 onActionSlot4()
 {
     self endon("disconnect");
-    actionIndex = 3;
 
     for(;;)
     {
-        self waittill("actionslot_4");
+        self waittill("actionslot 4");
         
         if (!self hasMenuOpen())
             continue;
         
+        [[game["tsd"]["menu"][getContext()]["action"]["actionslot 4"]]]();
+
         self notify("menu_draw");
     }
 }
@@ -196,14 +216,15 @@ onActionSlot4()
 onSmoke()
 {
     self endon("disconnect");
-    actionIndex = 4;
 
     for(;;)
     {
-        self waittill("smoked");
+        self waittill("smoke");
         
         if (!self hasMenuOpen())
             continue;
+        
+        [[game["tsd"]["menu"][getContext()]["action"]["smoke"]]]();
         
         self notify("menu_draw");
     }
@@ -212,7 +233,6 @@ onSmoke()
 onActivate()
 {
     self endon("disconnect");
-    actionIndex = 5;
 
     for(;;)
     {
@@ -221,6 +241,8 @@ onActivate()
         if (!self hasMenuOpen())
             continue;
         
+        [[game["tsd"]["menu"][getContext()]["action"]["activate"]]]();
+        
         self notify("menu_draw");
     }
 }
@@ -228,7 +250,6 @@ onActivate()
 onStand()
 {
     self endon("disconnect");
-    actionIndex = 6;
 
     for(;;)
     {
@@ -237,7 +258,12 @@ onStand()
         if (!self hasMenuOpen())
             continue;
 
-        [[game["tsd"]["menu"][getContext()]["body"][actionIndex]["func"]]]();
+        context = getContext();
+
+        if (!isDefined(game["tsd"]["menu"][context]["navigable"]))
+            [[game["tsd"]["menu"][context]["action"]["gostand"]]]();
+        else
+            self maps\mp\tsd\menu\_logic::handleMenuSelect();
         
         self notify("menu_draw");
     }
@@ -246,7 +272,6 @@ onStand()
 onMelee()
 {
     self endon("disconnect");
-    actionIndex = 7;
 
     for(;;)
     {
@@ -255,7 +280,7 @@ onMelee()
         if (!self hasMenuOpen())
             continue;
             
-        [[game["tsd"]["menu"][getContext()]["body"][actionIndex]["func"]]]();
+        [[game["tsd"]["menu"][getContext()]["action"]["melee"]]]();
         
         self notify("menu_draw");
     }
@@ -265,16 +290,15 @@ onMelee()
 onReload()
 {
     self endon("disconnect");
-    actionIndex = 8;
 
     for(;;)
     {
-        self waittill("reloaded");
+        self waittill("reload");
         
         if (!self hasMenuOpen())
             continue;
 
-        [[game["tsd"]["menu"][getContext()]["body"][actionIndex]["func"]]]();
+        [[game["tsd"]["menu"][getContext()]["action"]["reload"]]]();
 
         self notify("menu_draw");
     }
