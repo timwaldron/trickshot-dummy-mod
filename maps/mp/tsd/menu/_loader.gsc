@@ -7,7 +7,6 @@ init()
 setMapConfigs()
 {
     game["tsd"]["mapnames"]["mp_afghan"]["name"] = "Afghan";
-    game["tsd"]["mapnames"]["mp_afghan"]["teleport"][0]["text"] = "Afghan";
     game["tsd"]["mapnames"]["mp_derail"]["name"] = "Derail";
     game["tsd"]["mapnames"]["mp_estate"]["name"] = "Estate";
     game["tsd"]["mapnames"]["mp_favela"]["name"] = "Favela";
