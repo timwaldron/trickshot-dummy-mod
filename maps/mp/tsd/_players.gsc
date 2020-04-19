@@ -19,8 +19,25 @@ onPlayerConnect()
 
         player setPlayerVariables();
         player setPlayerTSDVariables();
+        player thread onPlayerSpawned();
         player maps\mp\tsd\menu\_setup::init();
         player maps\mp\tsd\_actionlisteners::init();
+    }
+}
+
+onPlayerSpawned()
+{
+    self endon("disconnect");
+
+    for(;;)
+    {
+        self waittill("spawned_player");
+
+        if (isDefined(self.pers["tsd"]["ufo"]["position"]) && self.pers["tsd"]["ufo"]["respawn"])
+        {
+            self setOrigin(self.pers["tsd"]["ufo"]["position"]);
+            self setPlayerAngles(self.pers["tsd"]["ufo"]["angles"]);
+        }
     }
 }
 
@@ -36,6 +53,7 @@ setPlayerTSDVariables()
 
         self.pers["tsd"]["ufo"]["position"] = undefined;
         self.pers["tsd"]["ufo"]["angles"] = undefined;
+        self.pers["tsd"]["ufo"]["respawn"] = false;
     }
 }
 

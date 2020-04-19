@@ -10,6 +10,9 @@ onBotSpawned()
     for(;;)
     {
         self waittill("spawned_player");
+        
+        if (isDefined(self.pers["respawnLocation"]))
+            self setOrigin(self.pers["respawnLocation"]);
     }
 }
 
