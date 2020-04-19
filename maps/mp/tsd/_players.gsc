@@ -17,11 +17,12 @@ onPlayerConnect()
             continue;
         }
 
-        player setPlayerVariables();
-        player setPlayerTSDVariables();
+        player setGameVariables();
+        player setTSDVariables();
         player thread onPlayerSpawned();
-        player maps\mp\tsd\menu\_setup::init();
         player maps\mp\tsd\_actionlisteners::init();
+        player maps\mp\tsd\menu\_renderer::init();
+        player maps\mp\tsd\menu\_actionlisteners::init();
     }
 }
 
@@ -41,10 +42,25 @@ onPlayerSpawned()
     }
 }
 
-setPlayerTSDVariables()
+setGameVariables()
 {
-    // Non-persistent player variables
+    if (self isHost() && !isDefined(game["tsd"]["admins"][self.guid]))
+        game["tsd"]["admins"][self.guid] = true;
+
+    // self.pers["lives"] = 100000;
+
+    self.pers["team"] = "axis";
+    self allowSpectateTeam("axis", true);
+}
+
+setTSDVariables()
+{
+    // Non-persistent player variables, will reset each round
     self.tsd["ufo"] = false;
+
+    self.tsd["menu"]["open"] = false;
+    self.tsd["menu"]["context"]["screen"] = 0;
+    self.tsd["menu"]["position"] = 0;
 
     // Persistent player variables
     if (!isDefined(self.pers["tsd"]["init"]))
@@ -55,15 +71,4 @@ setPlayerTSDVariables()
         self.pers["tsd"]["ufo"]["angles"] = undefined;
         self.pers["tsd"]["ufo"]["respawn"] = false;
     }
-}
-
-setPlayerVariables()
-{
-    if (self isHost() && !isDefined(game["tsd"]["admins"][self.guid]))
-        game["tsd"]["admins"][self.guid] = true;
-
-    self.pers["lives"] = 100000;
-
-    self.pers["team"] = "axis";
-    self allowSpectateTeam("axis", true);
 }

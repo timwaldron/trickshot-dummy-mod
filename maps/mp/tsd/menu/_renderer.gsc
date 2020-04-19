@@ -1,17 +1,17 @@
 #include maps\mp\tsd\_utility;
-#include maps\mp\tsd\menu\_logic;
+#include maps\mp\tsd\menu\_helpers;
 #include maps\mp\gametypes\_hud_util;
 
 init()
 {
-    self setupMenuText();
+    self setMenuText();
 
     self thread menuOpen();
     self thread menuDraw();
     self thread menuClose();
 }
 
-setupMenuText()
+setMenuText()
 {
     self.tsd["menu"]["text"]["title"] = createFontString("default", 2);
     self.tsd["menu"]["text"]["title"] setPoint("CENTER", "CENTER", 0, -150);
@@ -66,31 +66,26 @@ menuDraw()
         self.tsd["menu"]["text"]["title"] setText("^6" + game["tsd"]["menu"][curr]["title"]);
         self.tsd["menu"]["text"]["next"] setText("^3"+ game["tsd"]["menu"][next]["title"]);
 
-        foreach (key, value in self.tsd["menu"]["text"]["item"])
+        foreach (index, value in self.tsd["menu"]["text"]["item"])
         {
-            self.tsd["menu"]["text"]["item"][key] setText("");
+            self.tsd["menu"]["text"]["item"][index] setText("");
         }
 
         if (isDefined(game["tsd"]["menu"][curr]["navigable"]))
         {
-            textIndex = 0;
-
-            foreach (key, value in game["tsd"]["menu"][curr]["item"])
+            foreach (index, value in game["tsd"]["menu"][curr]["item"])
             {
                 colorCode = "^3";
 
-                if (self.tsd["menu"]["position"] == textIndex)
+                if (self.tsd["menu"]["position"] == index)
                     colorCode = "^2";
 
-                itemValue = getItemValue(game["tsd"]["menu"][curr]["item"][key]["id"]);
+                itemValue = getItemValue(game["tsd"]["menu"][curr]["item"][index]["id"]);
 
                 if (!isDefined(itemValue))
-                    self.tsd["menu"]["text"]["item"][key] setText(colorCode + game["tsd"]["menu"][curr]["item"][key]["text"]);
+                    self.tsd["menu"]["text"]["item"][index] setText(colorCode + game["tsd"]["menu"][curr]["item"][index]["text"]);
                 else
-                    self.tsd["menu"]["text"]["item"][key] setText(colorCode + game["tsd"]["menu"][curr]["item"][key]["text"] + "^4: " + itemValue);
-
-
-                textIndex += 1;
+                    self.tsd["menu"]["text"]["item"][index] setText(colorCode + game["tsd"]["menu"][curr]["item"][index]["text"] + "^7: ^4" + itemValue);
             }
         }
         else
@@ -122,14 +117,14 @@ menuClose()
         self waittill("menu_close");
         self.tsd["menu"]["open"] = false;
 
-        foreach (key, value in self.tsd["menu"]["text"]["item"])
+        foreach (index, value in self.tsd["menu"]["text"]["item"])
         {
-            self.tsd["menu"]["text"]["item"][key] setText("");
+            self.tsd["menu"]["text"]["item"][index] setText("");
         }
         
-        foreach (key, value in self.tsd["menu"]["text"])
+        foreach (index, value in self.tsd["menu"]["text"])
         {
-            self.tsd["menu"]["text"][key] setText("");
+            self.tsd["menu"]["text"][index] setText("");
         }
     
         self.tsd["menu"]["context"]["screen"] = 0;

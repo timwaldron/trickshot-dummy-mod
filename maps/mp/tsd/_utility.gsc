@@ -18,9 +18,33 @@ getContext()
     return self.tsd["menu"]["context"]["screen"];
 }
 
-getGameSettingValue(settingId)
+getSettingsValue(settingId)
 {
     return game["tsd"]["settings"][settingId]["value"];
+}
+
+getMapName(mapcode)
+{
+    if (isDefined(game["tsd"]["mapdata"][mapcode]["name"]))
+        return game["tsd"]["mapdata"][mapcode]["name"];
+
+    return mapcode;
+}
+
+isFatalWeapon(weapon, damageType)
+{
+    listId = "weaponlist";
+
+    if (damageType == 2)
+        listId = "customlist";
+
+    foreach (key, value in game["tsd"][listId])
+    {
+        if (isSubStr(weapon, value))
+            return true;
+    }
+
+    return false;
 }
 
 debugObject(message, object)
@@ -34,9 +58,4 @@ debugObject(message, object)
 info(message)
 {
     iPrintLn("^2INFO: " + message);
-}
-
-error(message)
-{
-    iPrintLn("^1ERROR: " + message);
 }

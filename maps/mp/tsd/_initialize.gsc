@@ -2,26 +2,51 @@ Callback_TrickShotDummy()
 {
     if (!isDefined(game["tsd"]["init"]))
     {
-        setupTSDVariables();
-        setupGameDvars();
-        maps\mp\tsd\_admins::setAdmins();
-        maps\mp\tsd\menu\_loader::init();
+        initDvars();
+        initSniperList();
+        initGameSettings();
+        maps\mp\tsd\_config::init();
+        maps\mp\tsd\menu\_schema::init();
         
         game["tsd"]["init"] = true;
     }
 
-    setupRoundVariables();
+    setRoundSettings();
     maps\mp\tsd\_players::init();
 }
 
-setupTSDVariables()
+setRoundSettings()
+{
+    level.onOneLeftEvent = undefined;
+}
+
+initDvars()
+{
+    setDvar("ui_allow_teamchange", 0);
+
+    setDvar("g_TeamName_Axis", "Player Team");
+    setDvar("g_TeamName_Allies", "Bot Team");
+
+    setDvar("testClients_doMove", 0);
+    setDvar("testClients_doAttack", 0);
+}
+
+initSniperList()
+{
+    game["tsd"]["weaponlist"][0] = "cheytac";
+    game["tsd"]["weaponlist"][1] = "barrett";
+    game["tsd"]["weaponlist"][2] = "wa2000";
+    game["tsd"]["weaponlist"][3] = "m21";
+    game["tsd"]["weaponlist"][4] = "m40a3";
+}
+
+initGameSettings()
 {
     // Match Settings
-    game["tsd"]["settings"]["damagetypes"]["value"] = 1;
-    game["tsd"]["settings"]["damagetypes"]["options"][0]["text"] = "Standard Game";
-    game["tsd"]["settings"]["damagetypes"]["options"][1]["text"] = "Snipers & Hitmarkers";
-    game["tsd"]["settings"]["damagetypes"]["options"][2]["text"] = "Snipers Only";
-    game["tsd"]["settings"]["damagetypes"]["options"][3]["text"] = "Custom List";
+    game["tsd"]["settings"]["damagetype"]["value"] = 1;
+    game["tsd"]["settings"]["damagetype"]["options"][0]["text"] = "Standard Game";
+    game["tsd"]["settings"]["damagetype"]["options"][1]["text"] = "Snipers";
+    game["tsd"]["settings"]["damagetype"]["options"][2]["text"] = "Custom List";
 
     // Fun Stuff
     game["tsd"]["settings"]["aimbot"]["value"] = 0;
@@ -46,20 +71,4 @@ setupTSDVariables()
     game["tsd"]["settings"]["slowmotion"]["options"][1]["text"] = "75 Percent";
     game["tsd"]["settings"]["slowmotion"]["options"][2]["text"] = "50 Percent";
     game["tsd"]["settings"]["slowmotion"]["options"][3]["text"] = "25 Percent";
-}
-
-setupRoundVariables()
-{
-    level.onOneLeftEvent = undefined;
-}
-
-setupGameDvars()
-{
-    setDvar("ui_allow_teamchange", 0);
-
-    setDvar("g_TeamName_Allies", "Bot Team");
-    setDvar("g_TeamName_Axis", "Player Team");
-
-    setDvar("testClients_doMove", 0);
-    setDvar("testClients_doAttack", 0);
 }

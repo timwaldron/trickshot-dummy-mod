@@ -63,3 +63,12 @@ checkRespawn()
     else
         return "^1disabled";
 }
+
+teleport(action)
+{
+    if (isDefined(game["tsd"]["mapdata"][getDvar("mapname")]["location"][action]))
+    {
+        self setOrigin(game["tsd"]["mapdata"][getDvar("mapname")]["location"][action]);
+        self notify("menu_close");
+    }
+}
