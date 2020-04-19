@@ -69,7 +69,7 @@ onWeaponFired()
         if (hitAssist == 0)
             continue;
 
-        start = self getTagOrigin("tag_eye");
+        start = self getTagOrigin("j_head");
         end = anglesToForward(self getPlayerAngles()) * 100000;
         destination = bulletTrace(start, end, true, self)["position"];
 
