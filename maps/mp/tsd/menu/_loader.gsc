@@ -187,4 +187,3 @@ setMapTeleportsText()
             break;
     }
 }
-                
