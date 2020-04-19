@@ -18,6 +18,7 @@ Callback_TrickShotDummy()
 setRoundSettings()
 {
     level.onOneLeftEvent = undefined;
+    level.numKills = 1;
 }
 
 initDvars()
