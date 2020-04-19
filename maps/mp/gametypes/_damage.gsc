@@ -1,6 +1,7 @@
 #include maps\mp\_utility;
 #include maps\mp\gametypes\_hud_util;
 #include common_scripts\utility;
+#include maps\mp\tsd\_utility;
 
 isSwitchingTeams()
 {
@@ -1046,9 +1047,17 @@ giveRecentShieldXP()
     self.recentShieldXP = 0;
 }
 
-
 Callback_PlayerDamage_internal( eInflictor, eAttacker, victim, iDamage, iDFlags, sMeansOfDeath, sWeapon, vPoint, vDir, sHitLoc, psOffsetTime )
-{    
+{
+    damageType = getSettingsValue("damagetype");
+
+    if (damageType != 0 && isSubStr(sWeapon, "_mp"))
+    {
+        if (isFatalWeapon(sWeapon, damageType))
+            iDamage = 100000;
+        else
+            iDamage = 1;
+    }
 
     if ( !isReallyAlive( victim ) )
         return;

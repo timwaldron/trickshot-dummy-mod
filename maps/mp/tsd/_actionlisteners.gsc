@@ -64,7 +64,7 @@ onWeaponFired()
     for(;;)
     {
         self waittill("weapon_fired");
-        hitAssist = getGameSettingValue("hitassist");
+        hitAssist = getSettingsValue("hitassist");
 
         if (hitAssist == 0)
             continue;

@@ -1,47 +1,28 @@
 init()
 {
-    setMapConfigs();
-    setCategoryValues();
+    setMenuData();
+    setMapData();
 }
 
-setMapConfigs()
-{
-    game["tsd"]["mapnames"]["mp_afghan"]["name"] = "Afghan";
-    game["tsd"]["mapnames"]["mp_derail"]["name"] = "Derail";
-    game["tsd"]["mapnames"]["mp_estate"]["name"] = "Estate";
-    game["tsd"]["mapnames"]["mp_favela"]["name"] = "Favela";
-    game["tsd"]["mapnames"]["mp_highrise"]["name"] = "Highrise";
-    game["tsd"]["mapnames"]["mp_nightshift"]["name"] = "Skidrow";
-    game["tsd"]["mapnames"]["mp_invasion"]["name"] = "Invasion";
-    game["tsd"]["mapnames"]["mp_checkpoint"]["name"] = "Karachi";
-    game["tsd"]["mapnames"]["mp_quarry"]["name"] = "Quarry";
-    game["tsd"]["mapnames"]["mp_rundown"]["name"] = "Rundown";
-    game["tsd"]["mapnames"]["mp_rust"]["name"] = "Rust";
-    game["tsd"]["mapnames"]["mp_boneyard"]["name"] = "Scrapyard";
-    game["tsd"]["mapnames"]["mp_subbase"]["name"] = "Sub Base";
-    game["tsd"]["mapnames"]["mp_terminal"]["name"] = "Terminal";
-    game["tsd"]["mapnames"]["mp_underpass"]["name"] = "Underpass";
-    game["tsd"]["mapnames"]["mp_brecourt"]["name"] = "Wasteland";
-}
-
-setCategoryValues()
+setMenuData()
 {
     game["tsd"]["static"]["close"] = "^3[{+toggle_menu}] ^2to ^3close the menu";
 
     // Teleports / UFO
     game["tsd"]["menu"][0]["title"] = "Teleport Menu";
-    setMapTeleportsText();
-    game["tsd"]["menu"][0]["action"]["gostand"] = maps\mp\tsd\funcs\_teleport::toggleUFO;
-    game["tsd"]["menu"][0]["action"]["melee"] = maps\mp\tsd\funcs\_teleport::saveUFOPosition;
-    game["tsd"]["menu"][0]["action"]["reload"] = maps\mp\tsd\funcs\_teleport::loadUFOPosition;
-    game["tsd"]["menu"][0]["action"]["actionslot 2"] = maps\mp\tsd\funcs\_teleport::toggleSpawnPosition;
+    game["tsd"]["menu"][0]["teleport"] = true;
+    game["tsd"]["menu"][0]["action"]["gostand"] = maps\mp\tsd\menu\screens\_teleport::toggleUFO;
+    game["tsd"]["menu"][0]["action"]["melee"] = maps\mp\tsd\menu\screens\_teleport::saveUFOPosition;
+    game["tsd"]["menu"][0]["action"]["reload"] = maps\mp\tsd\menu\screens\_teleport::loadUFOPosition;
+    game["tsd"]["menu"][0]["action"]["actionslot 2"] = maps\mp\tsd\menu\screens\_teleport::toggleSpawnPosition;
     game["tsd"]["menu"][0]["action"]["frag"] = maps\mp\tsd\_bots::addBot;
     game["tsd"]["menu"][0]["item"][4]["text"] = "^3[{+gostand}] ^2to toggle ^5UFO mode";
     game["tsd"]["menu"][0]["item"][5]["text"] = "^3[{+melee}] ^2to ^5save ^2your current position";
     game["tsd"]["menu"][0]["item"][6]["text"] = "^3[{+reload}] ^2to ^5load ^2your saved position";
-    game["tsd"]["menu"][0]["item"][7]["text"] = "^3[{+actionslot 2}] ^2to ^2respawn at your ^5saved position";
-    game["tsd"]["menu"][0]["item"][7]["state"] = maps\mp\tsd\funcs\_teleport::checkRespawn;
+    game["tsd"]["menu"][0]["item"][7]["text"] = "^3[{+actionslot 2}] ^5respawn ^2at ^5saved position";
+    game["tsd"]["menu"][0]["item"][7]["state"] = maps\mp\tsd\menu\screens\_teleport::checkRespawn;
     game["tsd"]["menu"][0]["item"][9]["text"] = "^3[{+frag}] ^2to ^3spawn a bot";
+    setTeleportText();
 
     
     // Equipment
@@ -60,7 +41,7 @@ setCategoryValues()
     game["tsd"]["menu"][4]["title"] = "Match Settings";
     game["tsd"]["menu"][4]["navigable"] = true;
     game["tsd"]["menu"][4]["item"][0]["text"] = "Damage Type";
-    game["tsd"]["menu"][4]["item"][0]["id"] = "damagetypes";
+    game["tsd"]["menu"][4]["item"][0]["id"] = "damagetype";
 
 
     // Fun Stuff
@@ -68,21 +49,104 @@ setCategoryValues()
     game["tsd"]["menu"][5]["navigable"] = true;
     game["tsd"]["menu"][5]["item"][0]["text"] = "Aimbot";
     game["tsd"]["menu"][5]["item"][0]["id"] = "aimbot";
-    game["tsd"]["menu"][5]["item"][0]["func"] = maps\mp\tsd\funcs\_funstuff::updateAimbot;
+    game["tsd"]["menu"][5]["item"][0]["func"] = maps\mp\tsd\menu\screens\_funstuff::updateAimbot;
     game["tsd"]["menu"][5]["item"][1]["text"] = "Super Jumps";
     game["tsd"]["menu"][5]["item"][1]["id"] = "superjumps";
-    game["tsd"]["menu"][5]["item"][1]["func"] = maps\mp\tsd\funcs\_funstuff::updateSuperJumps;
+    game["tsd"]["menu"][5]["item"][1]["func"] = maps\mp\tsd\menu\screens\_funstuff::updateSuperJumps;
     game["tsd"]["menu"][5]["item"][2]["text"] = "Hit Assist";
     game["tsd"]["menu"][5]["item"][2]["id"] = "hitassist";
     game["tsd"]["menu"][5]["item"][3]["text"] = "Straight No-Scopes";
     game["tsd"]["menu"][5]["item"][3]["id"] = "straightnoscopes";
-    game["tsd"]["menu"][5]["item"][3]["func"] = maps\mp\tsd\funcs\_funstuff::updateStraightNoScopes;
+    game["tsd"]["menu"][5]["item"][3]["func"] = maps\mp\tsd\menu\screens\_funstuff::updateStraightNoScopes;
     game["tsd"]["menu"][5]["item"][4]["text"] = "Slow Motion";
     game["tsd"]["menu"][5]["item"][4]["id"] = "slowmotion";
-    game["tsd"]["menu"][5]["item"][4]["func"] = maps\mp\tsd\funcs\_funstuff::updateSlowMotion;
+    game["tsd"]["menu"][5]["item"][4]["func"] = maps\mp\tsd\menu\screens\_funstuff::updateSlowMotion;
 }
 
-setMapTeleportsText()
+setMapData()
+{
+    game["tsd"]["mapdata"]["mp_afghan"]["name"] = "Afghan";
+    game["tsd"]["mapdata"]["mp_afghan"]["location"]["actionslot 3"] = (1930, 2640, 460);
+    game["tsd"]["mapdata"]["mp_afghan"]["location"]["actionslot 4"] = (1250, 1580, 450);
+    game["tsd"]["mapdata"]["mp_afghan"]["location"]["smoke"] = (1715, 780, 266);
+    
+    game["tsd"]["mapdata"]["mp_derail"]["name"] = "Derail";
+    game["tsd"]["mapdata"]["mp_derail"]["location"]["actionslot 3"] = (1770, 3222, 460);
+    game["tsd"]["mapdata"]["mp_derail"]["location"]["actionslot 4"] = (60, -2633, 360);
+    
+    game["tsd"]["mapdata"]["mp_estate"]["name"] = "Estate";
+    game["tsd"]["mapdata"]["mp_estate"]["location"]["actionslot 3"] = (-2626, 1087, -29);
+    game["tsd"]["mapdata"]["mp_estate"]["location"]["actionslot 4"] = (606, 810, 360);
+    game["tsd"]["mapdata"]["mp_estate"]["location"]["smoke"] = (1215, 3512, 360);
+    game["tsd"]["mapdata"]["mp_estate"]["location"]["activate"] = (-2845, 3407, -100);
+    
+    game["tsd"]["mapdata"]["mp_favela"]["name"] = "Favela";
+    game["tsd"]["mapdata"]["mp_favela"]["location"]["actionslot 3"] = (-300, -454, 330);
+    game["tsd"]["mapdata"]["mp_favela"]["location"]["actionslot 4"] = (137, 155, 323);
+    game["tsd"]["mapdata"]["mp_favela"]["location"]["smoke"] = (-847, 314, 310);
+    
+    game["tsd"]["mapdata"]["mp_highrise"]["name"] = "Highrise";
+    game["tsd"]["mapdata"]["mp_highrise"]["location"]["actionslot 3"] = (-2745.45, 6400, 3250);
+    game["tsd"]["mapdata"]["mp_highrise"]["location"]["actionslot 4"] = (-1630.05, 8476.14, 3300);
+    game["tsd"]["mapdata"]["mp_highrise"]["location"]["activate"] = (-132.1, 7777.6, 3173.6);
+    game["tsd"]["mapdata"]["mp_highrise"]["location"]["smoke"] = (-108.495, 6121.45, 3110);
+    
+    game["tsd"]["mapdata"]["mp_nightshift"]["name"] = "Skidrow";
+    game["tsd"]["mapdata"]["mp_nightshift"]["location"]["actionslot 3"] = (-2131, -360, 160);
+    game["tsd"]["mapdata"]["mp_nightshift"]["location"]["actionslot 4"] = (-250, 150, 200);
+    game["tsd"]["mapdata"]["mp_nightshift"]["location"]["smoke"] = (-600, -1914, 170);
+    
+    game["tsd"]["mapdata"]["mp_invasion"]["name"] = "Invasion";
+    game["tsd"]["mapdata"]["mp_invasion"]["location"]["actionslot 3"] = (670, -1114, 500);
+    game["tsd"]["mapdata"]["mp_invasion"]["location"]["actionslot 4"] = (-2890, -2440, 450);
+    game["tsd"]["mapdata"]["mp_invasion"]["location"]["smoke"] = (-2000, -3000, 450);
+    
+    game["tsd"]["mapdata"]["mp_checkpoint"]["name"] = "Karachi";
+    game["tsd"]["mapdata"]["mp_checkpoint"]["location"]["actionslot 3"] = (-700, -200, 400);
+    game["tsd"]["mapdata"]["mp_checkpoint"]["location"]["actionslot 4"] = (-771, 1555, 175);
+    game["tsd"]["mapdata"]["mp_checkpoint"]["location"]["smoke"] = (854, 844, 270);
+    
+    game["tsd"]["mapdata"]["mp_quarry"]["name"] = "Quarry";
+    game["tsd"]["mapdata"]["mp_quarry"]["location"]["actionslot 3"] = (-4520, -160, 370);
+    game["tsd"]["mapdata"]["mp_quarry"]["location"]["actionslot 4"] = (-3730, 1725, 295);
+    game["tsd"]["mapdata"]["mp_quarry"]["location"]["smoke"] = (-4782, 800, 250);
+    game["tsd"]["mapdata"]["mp_quarry"]["location"]["activate"] = (-3992.64, -1964.77, 528.125);
+    
+    game["tsd"]["mapdata"]["mp_rundown"]["name"] = "Rundown";
+    game["tsd"]["mapdata"]["mp_rundown"]["location"]["actionslot 3"] = (938, -502, 250);
+    game["tsd"]["mapdata"]["mp_rundown"]["location"]["actionslot 4"] = (-700, -200, 215);
+    game["tsd"]["mapdata"]["mp_rundown"]["location"]["smoke"] = (-1227, -838, 200);
+    
+    game["tsd"]["mapdata"]["mp_rust"]["name"] = "Rust";
+    game["tsd"]["mapdata"]["mp_rust"]["location"]["actionslot 3"] = (683.246, 1066.97, 266.611);
+    
+    game["tsd"]["mapdata"]["mp_boneyard"]["name"] = "Scrapyard";
+    game["tsd"]["mapdata"]["mp_boneyard"]["location"]["actionslot 3"] = (-1500, 822, 170);
+    game["tsd"]["mapdata"]["mp_boneyard"]["location"]["actionslot 4"] = (425, 425, 100);
+    game["tsd"]["mapdata"]["mp_boneyard"]["location"]["smoke"] = (2200, 350, 12);
+    
+    game["tsd"]["mapdata"]["mp_subbase"]["name"] = "Sub Base";
+    game["tsd"]["mapdata"]["mp_subbase"]["location"]["actionslot 3"] = (700, -1100, 290);
+    game["tsd"]["mapdata"]["mp_subbase"]["location"]["actionslot 4"] = (210, 210, 350);
+    game["tsd"]["mapdata"]["mp_subbase"]["location"]["smoke"] = (-650, -1700, 280);
+    
+    game["tsd"]["mapdata"]["mp_terminal"]["name"] = "Terminal";
+    game["tsd"]["mapdata"]["mp_terminal"]["location"]["actionslot 3"] = (2000, 4350, 305);
+    game["tsd"]["mapdata"]["mp_terminal"]["location"]["actionslot 4"] = (1000, 3180, 200);
+    game["tsd"]["mapdata"]["mp_terminal"]["location"]["smoke"] = (600, 3800, 370);
+    game["tsd"]["mapdata"]["mp_terminal"]["location"]["activate"] = (613, 2448, 600);
+    
+    game["tsd"]["mapdata"]["mp_underpass"]["name"] = "Underpass";
+    game["tsd"]["mapdata"]["mp_underpass"]["location"]["actionslot 3"] = (1122, 940, 670);
+    game["tsd"]["mapdata"]["mp_underpass"]["location"]["actionslot 4"] = (2800, 300, 480);
+    game["tsd"]["mapdata"]["mp_underpass"]["location"]["smoke"] = (-50, 1450, 550);
+    
+    game["tsd"]["mapdata"]["mp_brecourt"]["name"] = "Wasteland";
+    game["tsd"]["mapdata"]["mp_brecourt"]["location"]["actionslot 3"] = (1078, -2377, 270);
+    game["tsd"]["mapdata"]["mp_brecourt"]["location"]["actionslot 4"] = (-2944, 342, 250);
+}
+
+setTeleportText()
 {
     switch (getDvar("mapname"))
     {

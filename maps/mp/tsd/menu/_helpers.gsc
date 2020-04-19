@@ -51,6 +51,4 @@ handleMenuSelect()
         game["tsd"]["settings"][itemId]["value"] = 0;
 
     [[game["tsd"]["menu"][screenId]["item"][positionId]["func"]]](game["tsd"]["settings"][itemId]["value"]);
-
-    self notify("menu_draw");
 }

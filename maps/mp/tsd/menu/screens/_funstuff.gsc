@@ -2,17 +2,17 @@
 
 updateAimbot(value)
 {   
-    info("updateAimbot not implemented");
+    info("Aimbot not implemented");
 }
 
 updateSuperJumps(value)
 {
-    info("updateSuperJumps not implemented");
+    info("Super Jumps not implemented");
 }
 
 updateStraightNoScopes(value)
 {
-    info("updateStraightNoScopes not implemented");
+    info("Straight No-Scopes not implemented");
 }
 
 updateSlowMotion(value)

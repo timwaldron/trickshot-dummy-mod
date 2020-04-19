@@ -13,4 +13,4 @@ Bind/unbind key examples:
 `/bind i +toggle_menu`  
 `/unbind i`
 
-Alternately, once you have loaded the mod, you can bind toggling `i` key by entering the command `/exec bindings`
+Alternately, after loading the mod, enter the command `/exec bindings` to bind the menu to the `i` key.

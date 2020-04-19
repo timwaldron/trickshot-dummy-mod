@@ -1,5 +1,5 @@
 #include maps\mp\tsd\_utility;
-#include maps\mp\tsd\menu\_logic;
+#include maps\mp\tsd\menu\_helpers;
 
 init()
 {
@@ -21,7 +21,7 @@ notifyActions()
     self notifyOnPlayerCommand("actionslot 3", "+actionslot 3");
     self notifyOnPlayerCommand("actionslot 4", "+actionslot 4");
     self notifyOnPlayerCommand("smoke", "+smoke");
-    self notifyOnPlayerCommand("activated", "+activated");
+    self notifyOnPlayerCommand("activate", "+activate");
     self notifyOnPlayerCommand("gostand", "+gostand");
     self notifyOnPlayerCommand("melee", "+melee");
     self notifyOnPlayerCommand("reload", "+reload");
@@ -190,6 +190,12 @@ onActionSlot3()
         if (!self hasMenuOpen())
             continue;
 
+        if (isDefined(game["tsd"]["menu"][getContext()]["teleport"]))
+        {
+            self maps\mp\tsd\menu\screens\_teleport::teleport("actionslot 3");
+            continue;
+        }
+        
         [[game["tsd"]["menu"][getContext()]["action"]["actionslot 3"]]]();
         
         self notify("menu_draw");
@@ -207,6 +213,12 @@ onActionSlot4()
         if (!self hasMenuOpen())
             continue;
         
+        if (isDefined(game["tsd"]["menu"][getContext()]["teleport"]))
+        {
+            self maps\mp\tsd\menu\screens\_teleport::teleport("actionslot 4");
+            continue;
+        }
+
         [[game["tsd"]["menu"][getContext()]["action"]["actionslot 4"]]]();
 
         self notify("menu_draw");
@@ -224,6 +236,12 @@ onSmoke()
         if (!self hasMenuOpen())
             continue;
         
+        if (isDefined(game["tsd"]["menu"][getContext()]["teleport"]))
+        {
+            self maps\mp\tsd\menu\screens\_teleport::teleport("smoke");
+            continue;
+        }
+
         [[game["tsd"]["menu"][getContext()]["action"]["smoke"]]]();
         
         self notify("menu_draw");
@@ -236,11 +254,17 @@ onActivate()
 
     for(;;)
     {
-        self waittill("activated");
+        self waittill("activate");
         
         if (!self hasMenuOpen())
             continue;
         
+        if (isDefined(game["tsd"]["menu"][getContext()]["teleport"]))
+        {
+            self maps\mp\tsd\menu\screens\_teleport::teleport("activate");
+            continue;
+        }
+
         [[game["tsd"]["menu"][getContext()]["action"]["activate"]]]();
         
         self notify("menu_draw");
@@ -263,7 +287,7 @@ onStand()
         if (!isDefined(game["tsd"]["menu"][context]["navigable"]))
             [[game["tsd"]["menu"][context]["action"]["gostand"]]]();
         else
-            self maps\mp\tsd\menu\_logic::handleMenuSelect();
+            self maps\mp\tsd\menu\_helpers::handleMenuSelect();
         
         self notify("menu_draw");
     }

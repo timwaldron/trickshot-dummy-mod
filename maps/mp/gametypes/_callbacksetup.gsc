@@ -142,19 +142,19 @@ CodeCallback_HostMigration()
 SetupDamageFlags()
 {
     // code-defined:
-    level.iDFLAGS_RADIUS                        = 1;    // damage was indirect
-    level.iDFLAGS_NO_ARMOR                        = 2;    // armor does not protect from this damage
-    level.iDFLAGS_NO_KNOCKBACK                    = 4;    // do not affect velocity, just view angles
-    level.iDFLAGS_PENETRATION                    = 8;    // damage occurred after one or more penetrations
-    level.iDFLAGS_STUN                            = 16;    // non-lethal
-    level.iDFLAGS_SHIELD_EXPLOSIVE_IMPACT        = 32;    // missile impacted on the front of the victim's shield
-    level.iDFLAGS_SHIELD_EXPLOSIVE_IMPACT_HUGE    = 64;    //   ...and was from a projectile with "Big Explosion" checked on.
-    level.iDFLAGS_SHIELD_EXPLOSIVE_SPLASH        = 128;    // explosive splash, somewhat deflected by the victim's shield
+    level.iDFLAGS_RADIUS = 1;                           // damage was indirect
+    level.iDFLAGS_NO_ARMOR = 2;                         // armor does not protect from this damage
+    level.iDFLAGS_NO_KNOCKBACK = 4;                     // do not affect velocity, just view angles
+    level.iDFLAGS_PENETRATION = 8;                      // damage occurred after one or more penetrations
+    level.iDFLAGS_STUN = 16;                            // non-lethal
+    level.iDFLAGS_SHIELD_EXPLOSIVE_IMPACT = 32;         // missile impacted on the front of the victim's shield
+    level.iDFLAGS_SHIELD_EXPLOSIVE_IMPACT_HUGE = 64;    //   ...and was from a projectile with "Big Explosion" checked on.
+    level.iDFLAGS_SHIELD_EXPLOSIVE_SPLASH = 128;        // explosive splash, somewhat deflected by the victim's shield
 
     // script-defined:
-    level.iDFLAGS_NO_TEAM_PROTECTION            = 256;
-    level.iDFLAGS_NO_PROTECTION                    = 512;
-    level.iDFLAGS_PASSTHRU                        = 1024;
+    level.iDFLAGS_NO_TEAM_PROTECTION = 256;
+    level.iDFLAGS_NO_PROTECTION = 512;
+    level.iDFLAGS_PASSTHRU = 1024;
 }
 
 
