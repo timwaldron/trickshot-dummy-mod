@@ -13,8 +13,8 @@ notifyActions()
 
     self notifyOnPlayerCommand("moveleft", "+moveleft");
     self notifyOnPlayerCommand("moveright", "+moveright");
-    self notifyOnPlayerCommand("moveforward", "+forward");
-    self notifyOnPlayerCommand("moveback", "+back");
+    self notifyOnPlayerCommand("forward", "+forward");
+    self notifyOnPlayerCommand("back", "+back");
 
     self notifyOnPlayerCommand("frag", "+frag");
     self notifyOnPlayerCommand("actionslot 2", "+actionslot 2");
@@ -69,10 +69,16 @@ onMoveForward()
 
     for(;;)
     {
-        self waittill("moveforward");
+        self waittill("forward");
         
-        if (!self hasMenuOpen() && !isDefined(game["tsd"]["menu"][getContext()]["navigable"]))
+        if (!self hasMenuOpen())
             continue;
+
+        if (!isDefined(game["tsd"]["menu"][getContext()]["navigable"]))
+        {
+            [[game["tsd"]["menu"][getContext()]["action"]["forward"]]]();
+            continue;
+        }
 
         self.tsd["menu"]["position"] -= 1;
 
@@ -91,7 +97,7 @@ onMoveBack()
 
     for(;;)
     {
-        self waittill("moveback");
+        self waittill("back");
         
         if (!self hasMenuOpen() && !isDefined(game["tsd"]["menu"][getContext()]["navigable"]))
             continue;
@@ -155,7 +161,6 @@ onFrag()
         if (!self hasMenuOpen())
             continue;
 
-        context = self.tsd["menu"]["context"]["screen"];
         [[game["tsd"]["menu"][getContext()]["action"]["frag"]]]();
         
         self notify("menu_draw");
@@ -282,10 +287,8 @@ onStand()
         if (!self hasMenuOpen())
             continue;
 
-        context = getContext();
-
-        if (!isDefined(game["tsd"]["menu"][context]["navigable"]))
-            [[game["tsd"]["menu"][context]["action"]["gostand"]]]();
+        if (!isDefined(game["tsd"]["menu"][getContext()]["navigable"]))
+            [[game["tsd"]["menu"][getContext()]["action"]["gostand"]]]();
         else
             self maps\mp\tsd\menu\_helpers::handleMenuSelect();
         

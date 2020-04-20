@@ -14,12 +14,12 @@ setMenuData()
     game["tsd"]["menu"][0]["action"]["gostand"] = maps\mp\tsd\menu\screens\_teleport::toggleUFO;
     game["tsd"]["menu"][0]["action"]["melee"] = maps\mp\tsd\menu\screens\_teleport::saveUFOPosition;
     game["tsd"]["menu"][0]["action"]["reload"] = maps\mp\tsd\menu\screens\_teleport::loadUFOPosition;
-    game["tsd"]["menu"][0]["action"]["actionslot 2"] = maps\mp\tsd\menu\screens\_teleport::toggleSpawnPosition;
+    game["tsd"]["menu"][0]["action"]["forward"] = maps\mp\tsd\menu\screens\_teleport::toggleSpawnPosition;
     game["tsd"]["menu"][0]["action"]["frag"] = maps\mp\tsd\_bots::addBot;
     game["tsd"]["menu"][0]["item"][4]["text"] = "^3[{+gostand}] ^2to toggle ^5UFO mode";
     game["tsd"]["menu"][0]["item"][5]["text"] = "^3[{+melee}] ^2to ^5save ^2your current position";
     game["tsd"]["menu"][0]["item"][6]["text"] = "^3[{+reload}] ^2to ^5load ^2your saved position";
-    game["tsd"]["menu"][0]["item"][7]["text"] = "^3[{+actionslot 2}] ^5respawn ^2at ^5saved position";
+    game["tsd"]["menu"][0]["item"][7]["text"] = "^3[{+forward}] ^5respawn ^2at ^5saved position";
     game["tsd"]["menu"][0]["item"][7]["state"] = maps\mp\tsd\menu\screens\_teleport::checkRespawn;
     game["tsd"]["menu"][0]["item"][9]["text"] = "^3[{+frag}] ^2to ^3spawn a bot";
     setTeleportText();
