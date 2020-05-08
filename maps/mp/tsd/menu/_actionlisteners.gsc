@@ -55,6 +55,9 @@ onToggleMenu()
     {
         self waittill("toggle_menu");
         
+        if (!isAlive(self))
+            continue;
+
         if (self.tsd["menu"]["open"])
             self notify("menu_close");
         else

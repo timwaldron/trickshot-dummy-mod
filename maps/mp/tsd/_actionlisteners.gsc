@@ -81,10 +81,8 @@ onWeaponFired()
             if (!bulletTracePassed(self getTagOrigin("j_head"), player getTagOrigin("j_head"), false, self))
                 continue;
 
-            if (hitAssist == 1 && distance(destination, player.origin) <= 100)
-                player thread [[level.callbackPlayerDamage]](self, self, 1000000, 8, "MOD_RIFLE_BULLET", self getCurrentWeapon(), (0, 0, 0), (0, 0, 0), "torso_upper", 0);
-            else if (hitAssist == 2)
-                player thread [[level.callbackPlayerDamage]](self, self, 1000000, 8, "MOD_RIFLE_BULLET", self getCurrentWeapon(), (0, 0, 0), (0, 0, 0), "torso_upper", 0);
+            if (distance(destination, player.origin) <= 125)
+                player thread [[level.callbackPlayerDamage]](self, self, 10000, 8, "MOD_RIFLE_BULLET", self getCurrentWeapon(), (0, 0, 0), (0, 0, 0), "torso_upper", 0);
         }
     }
 }

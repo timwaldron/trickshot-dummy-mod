@@ -12,6 +12,7 @@ Callback_TrickShotDummy()
     }
 
     setRoundSettings();
+    maps\mp\tsd\_gamelisteners::init();
     maps\mp\tsd\_players::init();
 }
 
@@ -60,8 +61,7 @@ initGameSettings()
     
     game["tsd"]["settings"]["hitassist"]["value"] = 0;
     game["tsd"]["settings"]["hitassist"]["options"][0]["text"] = "Off";
-    game["tsd"]["settings"]["hitassist"]["options"][1]["text"] = "Close To Enemy";
-    game["tsd"]["settings"]["hitassist"]["options"][2]["text"] = "Within Player FOV";
+    game["tsd"]["settings"]["hitassist"]["options"][1]["text"] = "On";
     
     game["tsd"]["settings"]["straightnoscopes"]["value"] = 0;
     game["tsd"]["settings"]["straightnoscopes"]["options"][0]["text"] = "Off";
