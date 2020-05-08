@@ -47,8 +47,6 @@ setGameVariables()
     if (self isHost() && !isDefined(game["tsd"]["admins"][self.guid]))
         game["tsd"]["admins"][self.guid] = true;
 
-    // self.pers["lives"] = 100000;
-
     self.pers["team"] = "axis";
     self allowSpectateTeam("axis", true);
 }

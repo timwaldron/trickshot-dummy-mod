@@ -2,22 +2,22 @@
 #include maps\mp\gametypes\_hud_util;
 #include common_scripts\utility;
 
-FACTION_REF_COL                     = 0;
-FACTION_NAME_COL                     = 1;
-FACTION_SHORT_NAME_COL                 = 1;
-FACTION_WIN_GAME_COL                 = 3; 
-FACTION_WIN_ROUND_COL                 = 4;
-FACTION_MISSION_ACCOMPLISHED_COL     = 5;
-FACTION_ELIMINATED_COL                 = 6;
-FACTION_FORFEITED_COL                 = 7;
-FACTION_ICON_COL                     = 8;
-FACTION_HUD_ICON_COL                 = 9;
-FACTION_VOICE_PREFIX_COL             = 10;
-FACTION_SPAWN_MUSIC_COL             = 11;
-FACTION_WIN_MUSIC_COL                 = 12;
-FACTION_COLOR_R_COL                 = 13;
-FACTION_COLOR_G_COL                 = 14;
-FACTION_COLOR_B_COL                 = 15;
+FACTION_REF_COL = 0;
+FACTION_NAME_COL = 1;
+FACTION_SHORT_NAME_COL = 1;
+FACTION_WIN_GAME_COL = 3; 
+FACTION_WIN_ROUND_COL = 4;
+FACTION_MISSION_ACCOMPLISHED_COL = 5;
+FACTION_ELIMINATED_COL = 6;
+FACTION_FORFEITED_COL = 7;
+FACTION_ICON_COL = 8;
+FACTION_HUD_ICON_COL = 9;
+FACTION_VOICE_PREFIX_COL = 10;
+FACTION_SPAWN_MUSIC_COL = 11;
+FACTION_WIN_MUSIC_COL = 12;
+FACTION_COLOR_R_COL = 13;
+FACTION_COLOR_G_COL = 14;
+FACTION_COLOR_B_COL = 15;
 
 // when a team leaves completely, that team forfeited, team left wins round, ends game
 onForfeit( team )
